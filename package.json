@@ -1,0 +1,47 @@
+{
+  "name": "hook-me-up",
+  "version": "0.0.0",
+  "description": "React hooks sagas, or something like that",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "rm -rf dist && tsc",
+    "prepare": "npm run build"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MadRabbit/hook-me-up.git"
+  },
+  "author": "Nikolay Nemshilov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MadRabbit/hook-me-up/issues"
+  },
+  "homepage": "https://github.com/MadRabbit/hook-me-up#readme",
+  "devDependencies": {
+    "@types/jest": "^23.3.13",
+    "@types/react": "^16.7.21",
+    "eslint-config-shortlyster-ts": "^1.0.2",
+    "husky": "^1.3.1",
+    "jest": "^24.0.0",
+    "lint-staged": "^8.1.0",
+    "react": "^16.7.0",
+    "typescript": "^3.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  }
+}
