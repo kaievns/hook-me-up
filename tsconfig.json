@@ -5,7 +5,8 @@
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
-    "module": "commonjs"
+    "module": "commonjs",
+    "jsx": "react"
   },
   "include": [
     "src/**/*"
