@@ -4,10 +4,10 @@ export const runForever = async (func: Function): Promise<void> => {
   }
 }
 
-export const pop = (event: string) => {
+export const forEvent = (event: string) => {
   return Promise.resolve({})
 }
 
-export const push = (event: string, payload: any): void => {
+export const emit = (event: string, payload: any): void => {
   
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { runForever, pop, push } from './index';
+import { runForever, forEvent, emit } from './index';
 
 interface User {
   id: string;
@@ -19,34 +19,34 @@ const api = {
 
 const [user, setCurrentUser] = useState<User>(null);
 
-const redirectTo = (url: string) => push('REDIRECT_TO', url);
+const redirectTo = (url: string) => emit('REDIRECT_TO', url);
 
 const authBouncer = async () => {
-  const user = await pop('signin') as User;
+  const user = await forEvent('signin') as User;
   setCurrentUser(user);
   await redirectTo('/');
 
-  await pop('signout');
+  await forEvent('signout');
   setCurrentUser(null);
   await redirectTo('/signin');
 };
 
 const authPersistor = async () => {
-  const user = await pop('signin') as User;
+  const user = await forEvent('signin') as User;
   sessionStorage.setItem('currentUser', JSON.stringify(user));
 
-  await pop('signout');
+  await forEvent('signout');
   sessionStorage.removeItem('currentUser');
 }
 
 const authenticator = async () => {
-  const { username, password } = await pop('signin-request') as AuthCreds;
+  const { username, password } = await forEvent('signin-request') as AuthCreds;
 
   try {
     const user: User = await api.get('/token', { username, password });
-    push('signin-success', user);
+    emit('signin-success', user);
   } catch (error) {
-    push('signin-failure', error);
+    emit('signin-failure', error);
   }
 }
 
@@ -55,7 +55,7 @@ const rehidrateUser = async () => {
     const data = sessionStorage.getItem('currentUser');
     const payload = JSON.parse(data);
   } catch (error) {
-    push('rehidration-failure', error);
+    emit('rehidration-failure', error);
   }
 }
 
